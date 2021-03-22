@@ -47,7 +47,40 @@ document.addEventListener("DOMContentLoaded", () => {
     
   }  )
 
+  // ----- Editing To-do list ----- //
+  todosList.addEventListener('click', function (event){
 
+    if (event.target.matches('button.Delete-Button')){
+      // console.log('Button clicked')
+      event.target.closest('li').remove()
+    }
+    else if (event.target.matches('button.Edit-Button')){
+      // console.log(document.querySelector('li.Edit-Button'))
+
+      const editBox = document.createElement('input') 
+      // editBox.classList.add("Edit-Box")
+
+      event.target.closest('li').appendChild(editBox)
+      event.target.remove()
+
+      editBox.addEventListener('keypress', function (event){
+        if (event.key === 'Enter'){
+          let newVal = event.target.value
+          // console.log(event.target.previousElementSibling)
+          // console.log(event.target.closest('li').querySelector('p'))
+          let oldVal = event.target.closest('li').querySelector('p')
+          oldVal.textContent = newVal
+        //------- Edit button re-creation -------//
+            const editButton = document.createElement('button')
+            editButton.classList.add("Edit-Button")
+            editButton.innerText = "Edit"
+            // if you are appending and removing. you need to append before you remove the element.
+            event.target.closest('li').append(editButton)
+            editBox.remove()
+        }       
+      })
+    }
+  })
 
 
 });
